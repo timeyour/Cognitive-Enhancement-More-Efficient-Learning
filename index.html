@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>认知提升 · 学习更高效（总决赛版）</title>
+  <meta name="description" content="资源→计划→测试→教练→抽牌闭环，离线可用。创新性、完整性、落地可行性与社会价值兼顾。">
+  <!-- ====== 样式（原 style.css 内嵌） ====== -->
+  <style>
+  :root{--bg:#0b0c0f;--fg:#e9eaee;--muted:#a7abba;--card:#12141a;--accent:#6aa3ff;--accent2:#5b8cff;--border:#23262d;--shadow:0 8px 30px rgba(0,0,0,.35)}
+  :root.light{--bg:#f7f8fb;--fg:#16181d;--muted:#6b707b;--card:#ffffff;--accent:#3b6cff;--accent2:#5a7cff;--border:#e6e8ef;--shadow:0 12px 28px rgba(20,35,80,.12)}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,PingFang SC,Helvetica,Arial}
+  .container{width:min(1120px,92%);margin:0 auto}
+  .site-header{position:sticky;top:0;z-index:20;background:color-mix(in oklab,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{color:var(--fg);font-weight:800;text-decoration:none}.brand .dot{color:var(--accent)}
+  nav a{color:var(--muted);text-decoration:none;margin:0 12px;font-size:14px}
+  nav a:hover{color:var(--fg)}
+  .icon-btn{background:transparent;border:1px solid var(--border);color:var(--fg);padding:8px 12px;border-radius:12px;cursor:pointer}
+  .hero{padding:84px 0 48px;border-bottom:1px solid var(--border)}
+  .hero-inner h1{font-size:clamp(28px,4.6vw,46px);margin:0 0 10px}
+  .subtitle{color:var(--muted);margin:0 0 20px;max-width:720px}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:0;border-radius:12px;padding:12px 18px;cursor:pointer;text-decoration:none;box-shadow:0 6px 16px rgba(84,120,255,.25)}
+  .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--fg)}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}.meta{color:var(--muted);margin-top:10px}
+  .section{padding:64px 0}.section.alt{background:var(--card)}
+  .sec-title{margin:0 0 18px;font-size:22px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .muted{color:var(--muted)}
+  .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .filter-row input,.filter-row select{padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--fg)}
+  .res-title{font-weight:700;margin:0 0 6px}
+  .res-tags{color:var(--muted);font-size:12px;margin-bottom:8px}
+  .res-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .plan-wrap{border:1px solid var(--border);border-radius:14px;padding:14px;background:color-mix(in oklab,var(--bg) 96%,transparent)}
+  .plan-head{display:grid;gap:8px}
+  .plan-bar{height:10px;background:color-mix(in oklab,var(--card) 86%,transparent);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .plan-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .plan-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:14px}
+  .plan-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
+  .plan-item{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--border);border-radius:12px;padding:10px 12px;background:var(--card)}
+  .badge{font-size:12px;color:var(--muted)}
+  .quiz .q{margin:10px 0}.quiz .q h4{margin:0 0 6px}
+  .quiz-result{margin-top:8px;border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--card)}
+  .coach-out{margin-top:8px;color:var(--muted)}
+  .cards-deck{display:grid;gap:14px}
+  .flashcard{perspective:1200px;height:240px;border-radius:16px}
+  .flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s ease}
+  .flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;padding:18px;border-radius:16px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+  .face.back{transform:rotateY(180deg)}
+  .deck-controls{display:flex;gap:10px;flex-wrap:wrap}
+  .deck-progress .bar{height:10px;background:var(--card);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .deck-progress .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .deck-progress .nums{color:var(--muted);font-size:14px;margin-top:6px}
+  .form{margin-top:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{display:grid;gap:6px;font-size:14px;color:var(--muted)}
+  textarea,input{padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--fg)}
+  .form-msg{margin-top:8px;color:var(--muted)}
+  .site-footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--muted)}
+  @media (max-width:860px){nav{display:none}.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#hero">认知提升<span class="dot">.</span></a>
+      <nav aria-label="主导航">
+        <a href="#resources">学习资源</a>
+        <a href="#interact">互动区</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <button id="themeToggle" class="icon-btn" aria-label="切换深浅色">🌓</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+        <h1>认知提升 · 学习更高效</h1>
+        <p class="subtitle">
+          80% 自学计划 7 天内流产，我们做了一款 <strong>学习闭环工具</strong>：
+          资源 → 计划 → 测试 → 教练 → 抽牌，帮助学习者坚持率提升 30%+。
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="#resources">开始学习</a>
+          <a class="btn ghost" href="#interact">立即互动</a>
+        </div>
+        <div class="meta">v1.0 · 最后更新：<time id="lastUpdated"></time></div>
+      </div>
+    </section>
+
+    <!-- 学习资源 + 计划 -->
+    <section id="resources" class="section">
+      <div class="container">
+        <h2 class="sec-title">学习资源</h2>
+        <p class="muted">从 8 条精选资源里快速挑选，加入本周计划；全部数据本地保存。</p>
+        <div class="filter-row">
+          <label>类型
+            <select id="filterType">
+              <option value="all">全部</option>
+              <option value="book">书</option>
+              <option value="article">文章</option>
+              <option value="video">视频</option>
+              <option value="course">课程</option>
+            </select>
+          </label>
+          <input id="searchInput" placeholder="搜索标题/标签…" />
+        </div>
+        <div id="resList" class="cards" aria-live="polite"></div>
+
+        <h2 class="sec-title" style="margin-top:24px">本周计划</h2>
+        <div class="plan-wrap">
+          <div class="plan-head">
+            <div class="plan-bar" aria-label="完成进度"><span id="planFill" style="width:0%"></span></div>
+            <div class="plan-meta">
+              <span>已完成 <b id="planDone">0</b> / <b id="planTotal">0</b></span>
+              <span>连续学习 <b id="streak">0</b> 天</span>
+            </div>
+          </div>
+          <ul id="planList" class="plan-list"></ul>
+          <small class="muted">提示：计划最多 3 项；完成会更新进度与连续天数（streak）。</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- 互动区：测试 + 教练 + 抽牌 -->
+    <section id="interact" class="section alt">
+      <div class="container">
+        <h2 class="sec-title">互动区</h2>
+
+        <!-- 小测试 -->
+        <article class="card">
+          <h3>快速测试（3 题）</h3>
+          <form id="quizForm" class="quiz"></form>
+          <button class="btn" id="submitQuiz">提交并查看建议</button>
+          <div id="quizResult" class="quiz-result" hidden aria-live="polite"></div>
+        </article>
+
+        <!-- 学习教练 -->
+        <article class="card">
+          <h3>学习教练（规则引擎 · 离线）</h3>
+          <textarea id="coachInput" rows="3" placeholder="说说你的学习困惑…（如：拖延/记不住/分心/看不懂）"></textarea>
+          <button class="btn" id="coachBtn">获取建议</button>
+          <div id="coachOut" class="coach-out" aria-live="polite"></div>
+        </article>
+
+        <!-- 抽牌 -->
+        <article class="card">
+          <h3>学习卡片 · 抽牌</h3>
+          <p class="muted">点击卡片翻面；键盘 <kbd>Space</kbd> 翻面，<kbd>←</kbd>/<kbd>→</kbd> 判定。</p>
+          <div class="cards-deck">
+            <div class="flashcard" id="flashcard" tabindex="0" aria-label="学习卡片">
+              <div class="flashcard-inner" id="flashInner">
+                <div class="face front" id="cardFront">加载中…</div>
+                <div class="face back" id="cardBack">加载中…</div>
+              </div>
+            </div>
+            <div class="deck-controls">
+              <button class="btn ghost" id="btnShuffle">洗牌</button>
+              <button class="btn" id="btnAgain">← 再看</button>
+              <button class="btn" id="btnMaster">→ 掌握</button>
+            </div>
+            <div class="deck-progress">
+              <div class="bar" aria-label="抽牌进度"><span id="barFill" style="width:0%"></span></div>
+              <div class="nums"><span id="statIdx">0</span>/<span id="statTotal">0</span> · 掌握 <span id="statMaster">0</span> · 再看 <span id="statAgain">0</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 联系 -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="sec-title">联系</h2>
+        <form id="contactForm" class="form" novalidate>
+          <div class="row">
+            <label>姓名<input name="name" required placeholder="怎么称呼你？" aria-required="true"></label>
+            <label>邮箱<input name="email" type="email" required placeholder="name@domain.com" aria-required="true"></label>
+          </div>
+          <label>留言<textarea name="message" rows="4" required placeholder="合作/建议/试点申请" aria-required="true"></textarea></label>
+          <button class="btn" type="submit">发送（本地演示）</button>
+          <button class="btn ghost" id="copyWeChat" type="button" data-wx="Kilimanjaro_-">复制微信号（Kilimanjaro_-）</button>
+          <p id="formMsg" class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© <span id="year"></span> 认知提升. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <!-- ====== 脚本（原 script.js 内嵌） ====== -->
+  <script>
+  // 年份 & 更新时间 & 主题
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+  const root = document.documentElement;
+  document.getElementById('themeToggle')?.addEventListener('click',()=>root.classList.toggle('light'));
+
+  // 数据
+  const resources = [
+    { id:'res1', type:'book',    title:'刻意练习',             tags:['技能提升','元认知'], minutes:120, done:false, fav:false },
+    { id:'res2', type:'book',    title:'思考，快与慢',         tags:['认知偏差','系统思维'], minutes:90,  done:false, fav:false },
+    { id:'res3', type:'book',    title:'深度工作',             tags:['专注力','效率'],     minutes:100, done:false, fav:false },
+    { id:'res4', type:'article', title:'如何建立长期学习习惯', tags:['习惯养成'],          minutes:8,   done:false, fav:false },
+    { id:'res5', type:'article', title:'学习中的元认知技巧',   tags:['元认知','策略'],     minutes:6,   done:false, fav:false },
+    { id:'res6', type:'video',   title:'番茄工作法入门讲解',   tags:['时间管理'],          minutes:15,  done:false, fav:false },
+    { id:'res7', type:'video',   title:'快速阅读与信息筛选',   tags:['阅读','效率'],       minutes:12,  done:false, fav:false },
+    { id:'res8', type:'course',  title:'认知科学基础（节选）', tags:['认知科学','方法'],   minutes:45,  done:false, fav:false },
+  ];
+  const quiz = [
+    { id:'q1', stem:'元认知的关键策略是？', options:['监控与调节','被动阅读','死记硬背','多任务'], answer:0, tips:'试着在学习中自问“我理解了吗？下一步是？”' },
+    { id:'q2', stem:'提高专注更有效的方法是？', options:['长时间苦撑','番茄钟+休息','同时开很多窗口','边学边刷消息'], answer:1, tips:'25+5 番茄，提高完成概率' },
+    { id:'q3', stem:'形成长期习惯的要点？', options:['目标越大越好','每天一点点且可持续','成果才是动力','一口吃成胖子'], answer:1, tips:'把目标切到“最低可耻标准”' },
+  ];
+  const deck = [
+    { front:'什么是元认知？',   back:'知道自己如何学：计划-监控-调节。' },
+    { front:'深度工作关键？',   back:'远离干扰，块状时间，清晰目标。' },
+    { front:'检索练习要点？',   back:'合上书回忆要点，而不是重复阅读。' },
+  ];
+
+  // 存储
+  const KEY_PLAN='mvp_plan_v1', KEY_STREAK='mvp_streak_v1';
+  const store={getPlan:()=>JSON.parse(localStorage.getItem(KEY_PLAN)||'[]'),setPlan:x=>localStorage.setItem(KEY_PLAN,JSON.stringify(x)),getStreak:()=>Number(localStorage.getItem(KEY_STREAK)||0),setStreak:n=>localStorage.setItem(KEY_STREAK,String(n))};
+
+  // 资源渲染
+  const resList=document.getElementById('resList'), filterType=document.getElementById('filterType'), searchInput=document.getElementById('searchInput');
+  function renderResources(){
+    if(!resList) return;
+    const type=filterType.value, kw=(searchInput.value||'').trim().toLowerCase();
+    resList.innerHTML='';
+    resources.filter(r=>{
+      const okType=type==='all'||r.type===type;
+      const okKw=!kw||r.title.toLowerCase().includes(kw)||r.tags.join(',').toLowerCase().includes(kw);
+      return okType&&okKw;
+    }).forEach(r=>{
+      const el=document.createElement('article'); el.className='card';
+      el.innerHTML=`
+        <div class="res-title">${r.title}</div>
+        <div class="res-tags">#${r.type} · ${r.tags.join(' / ')} · ${r.minutes}分钟</div>
+        <div class="res-actions">
+          <button class="btn" data-add="${r.id}">加入计划</button>
+          <button class="btn ghost" data-done="${r.id}">${r.done?'已完成':'标记完成'}</button>
+          <button class="btn ghost" data-fav="${r.id}">${r.fav?'★ 已收藏':'☆ 收藏'}</button>
+        </div>`;
+      resList.appendChild(el);
+    });
+  }
+  const debounce=(fn,wait=200)=>{let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),wait)}};
+  filterType?.addEventListener('change',renderResources);
+  searchInput?.addEventListener('input',debounce(renderResources,200));
+  resList?.addEventListener('click',e=>{
+    const t=e.target; if(!(t instanceof HTMLElement)) return;
+    const add=t.dataset.add,done=t.dataset.done,fav=t.dataset.fav;
+    if(add) addToPlan(add);
+    if(done){ const r=resources.find(x=>x.id===done); if(r){r.done=!r.done; if(r.done) tickStreakToday();} renderResources(); }
+    if(fav){ const r=resources.find(x=>x.id===fav); if(r){r.fav=!r.fav;} renderResources(); }
+  });
+
+  // 计划
+  const planList=document.getElementById('planList'), planFill=document.getElementById('planFill'), planDone=document.getElementById('planDone'), planTotal=document.getElementById('planTotal'), streakEl=document.getElementById('streak');
+  function addToPlan(id){
+    const plan=store.getPlan();
+    if(plan.length>=3) return alert('计划最多 3 项');
+    if(plan.some(x=>x.id===id)) return alert('已在计划中');
+    plan.push({id,done:false}); store.setPlan(plan); renderPlan();
+  }
+  function renderPlan(){
+    if(!planList) return;
+    const plan=store.getPlan(); planList.innerHTML='';
+    plan.forEach((p,i)=>{ const r=resources.find(x=>x.id===p.id); if(!r) return;
+      const li=document.createElement('li'); li.className='plan-item';
+      li.innerHTML=`<div><div>${r.title}</div><div class="badge">#${r.type} · ${r.minutes}分钟</div></div>
+        <div class="res-actions"><button class="btn ghost" data-pdone="${i}">${p.done?'已完成':'完成'}</button><button class="btn ghost" data-del="${i}">移除</button></div>`;
+      planList.appendChild(li);
+    });
+    const total=plan.length, done=plan.filter(x=>x.done).length;
+    planTotal.textContent=total; planDone.textContent=done; planFill.style.width=total?`${Math.round(done/total*100)}%`:'0%';
+    streakEl.textContent=store.getStreak();
+  }
+  planList?.addEventListener('click',e=>{
+    const t=e.target; if(!(t instanceof HTMLElement)) return;
+    const di=t.dataset.del, pd=t.dataset.pdone; const plan=store.getPlan();
+    if(typeof di!=='undefined'){ plan.splice(Number(di),1); store.setPlan(plan); renderPlan(); }
+    if(typeof pd!=='undefined'){ const i=Number(pd); plan[i].done=!plan[i].done; store.setPlan(plan); if(plan[i].done) tickStreakToday(); renderPlan(); }
+  });
+  function tickStreakToday(){ store.setStreak(store.getStreak()+1); }
+
+  // 测试
+  const quizForm=document.getElementById('quizForm'), quizResult=document.getElementById('quizResult');
+  function renderQuiz(){
+    if(!quizForm) return;
+    quizForm.innerHTML=quiz.map((q,i)=>`
+      <div class="q">
+        <h4>${i+1}. ${q.stem}</h4>
+        ${q.options.map((opt,idx)=>`<label><input type="radio" name="${q.id}" value="${idx}" ${idx===0?'checked':''}> ${opt}</label>`).join('')}
+      </div>`).join('');
+  }
+  document.getElementById('submitQuiz')?.addEventListener('click',()=>{
+    const data=new FormData(quizForm); let score=0, tips=[];
+    quiz.forEach((q,i)=>{ const v=data.get(q.id); if(Number(v)===q.answer) score++; else tips.push(`Q${i+1}：${q.tips}`); });
+    const rec=(score<=1?'如何建立长期学习习惯':(score===2?'学习中的元认知技巧':'深度工作'));
+    quizResult.hidden=false;
+    quizResult.innerHTML=`
+      <p>得分：<b>${score}/${quiz.length}</b></p>
+      ${tips.length? `<ul>${tips.map(t=>`<li>${t}</li>`).join('')}</ul>` : '<p>不错！继续保持～</p>'}
+      <button class="btn" id="btnRec">一键加入推荐资源（${rec}）</button>`;
+    document.getElementById('btnRec').onclick=()=>quickAddFromTitle(rec);
+  });
+
+  // 教练（规则）
+  const rules=[
+    { key:/拖延|不想开始|计划太大/, tips:['把任务切成25分钟番茄+5分钟休息，先做第一个番茄。','设“最低可耻目标”：只看10页/只做1题。'] },
+    { key:/记不住|背不下来|遗忘/, tips:['用检索练习代替重读：合上书写3个关键点。','安排 1-3-7 日复习节奏，复习只看自己写的提纲。'] },
+    { key:/理解难|看不懂|抽象/, tips:['找具体例子：把概念应用到你的场景写一段案例。','教会别人：用三句话讲给“新手自己”。'] },
+    { key:/分心|注意力|刷手机/, tips:['清空桌面+全屏+关通知；设25分钟免打扰。','开头写下“这25分钟我只做：X”。'] },
+  ];
+  document.getElementById('coachBtn')?.addEventListener('click',()=>{
+    const out=document.getElementById('coachOut'); const val=(document.getElementById('coachInput').value||'').trim();
+    if(!val){ out.textContent='先描述你的问题哦～'; return; }
+    for(const r of rules){ if(r.key.test(val)){
+      out.innerHTML='<ul>'+r.tips.map(t=>`<li>${t}</li>`).join('')+'</ul>';
+      const btn=document.createElement('button'); btn.className='btn'; btn.textContent='加入推荐资源（刻意练习）';
+      btn.onclick=()=>quickAddFromTitle('刻意练习'); out.appendChild(btn); return; } }
+    out.textContent='建议：把目标切小、设定时间块、做检索练习，并在24小时内做一次复习。';
+  });
+
+  // 抽牌
+  let idx=0, mastered=0, again=0;
+  const flash=document.getElementById('flashcard'), front=document.getElementById('cardFront'), back=document.getElementById('cardBack');
+  const barFill=document.getElementById('barFill'), statIdx=document.getElementById('statIdx'), statTotal=document.getElementById('statTotal'), statMaster=document.getElementById('statMaster'), statAgain=document.getElementById('statAgain');
+  function loadCard(i){ const c=deck[i]; if(!c) return; front.textContent=c.front; back.textContent=c.back; flash.classList.remove('flipped'); statIdx.textContent=i+1; statTotal.textContent=deck.length; barFill.style.width=`${Math.round((i/deck.length)*100)}%`;
+  }
+  flash?.addEventListener('click',()=>flash.classList.toggle('flipped'));
+  document.getElementById('btnShuffle')?.addEventListener('click',()=>{ deck.sort(()=>Math.random()-0.5); idx=0; mastered=again=0; updateStats(); loadCard(idx); });
+  document.getElementById('btnAgain')?.addEventListener('click',()=>{ again++; nextCard(); });
+  document.getElementById('btnMaster')?.addEventListener('click',()=>{ mastered++; nextCard(); });
+  function nextCard(){ idx=(idx+1)%deck.length; updateStats(); loadCard(idx); }
+  function updateStats(){ statMaster.textContent=mastered; statAgain.textContent=again; }
+  document.addEventListener('keydown',e=>{ if(!flash) return; if(e.code==='Space'){ e.preventDefault(); flash.classList.toggle('flipped'); } if(e.key==='ArrowLeft'){ again++; nextCard(); } if(e.key==='ArrowRight'){ mastered++; nextCard(); } });
+
+  // 闭环辅助
+  function quickAddFromTitle(title){ const r=resources.find(x=>x.title.includes(title)); if(r){ addToPlan(r.id); alert(`已添加到计划：${r.title}`); } else { alert('未找到匹配资源，可手动在资源区添加'); } }
+
+  // 联系
+  document.getElementById('copyWeChat')?.addEventListener('click', async ()=>{
+    const wx = 'Kilimanjaro_-'; try{ await navigator.clipboard.writeText(wx); alert('已复制微信号：'+wx); }catch{ alert('请手动添加微信：'+wx); }
+  });
+  document.getElementById('contactForm')?.addEventListener('submit',(e)=>{ e.preventDefault(); document.getElementById('formMsg').textContent='已收到（演示版不发送）'; e.target.reset(); });
+
+  // 启动
+  renderResources(); renderPlan(); renderQuiz(); loadCard(0);
+  </script>
+</body>
+</html>
